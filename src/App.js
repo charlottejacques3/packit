@@ -22,8 +22,12 @@ class App extends Component {
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
     }
+
+    let url_prefix = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
+    let url_suffix = "?unitGroup=metric&include=days&key=LR9FZM68C2LQX5B8SUT84J6QK&contentType=json";
+
     this.setState({
-      apiUrl: "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/vancouver?unitGroup=metric&include=days&key=LR9FZM68C2LQX5B8SUT84J6QK&contentType=json",
+      apiUrl: url_prefix.concat(formData.get("location"), url_suffix),
       formSubmitted: true,
     });
   }

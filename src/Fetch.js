@@ -1,25 +1,36 @@
 import { useState, useEffect } from "react";
 
-const Fetch = ({ url }) => {
+function Fetch ({ url }) {
     const [weatherData, setWeatherData] = useState([]);
+    const [error, setError] = useState(null);
+
     useEffect(() => {
-        //use url search params to pass location, dates etc?
-        //https://stackoverflow.com/questions/35038857/setting-query-string-using-fetch-get-request
         fetch(url)
         .then((res) => {
+            if (!res.ok) {
+                throw new Error(`HTTP error: status ${res.status}`)
+            }
             return res.json();
         })
         .then((data) => {
             console.log(data.days);
             setWeatherData(data.days);
+        })
+        .catch((err) => {
+            console.error(err.message);
+            setError(err.message);
         });
-    }, []);
+    }, [url]);
 
     return (
         <div>
-            {weatherData.map((data) => (
-                <p key={data.datetimeEpoch}>{data.tempmax}</p>
-            ))}
+            { error ? (
+                <p>Error: Please enter a valid location</p>
+            ) : (
+                weatherData.map((data) => (
+                    <p key={data.datetimeEpoch}>{data.tempmax}</p>
+                ))
+            )}
         </div>
     );
 };
