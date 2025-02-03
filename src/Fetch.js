@@ -22,13 +22,21 @@ function Fetch ({ url }) {
         });
     }, [url]);
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toDateString();
+    }
+
     return (
         <div>
             { error ? (
                 <p>Error: Please enter a valid location</p>
             ) : (
                 weatherData.map((data) => (
-                    <p key={data.datetimeEpoch}>{data.tempmax}</p>
+                    <span>
+                        <p key={data.datetimeEpoch}>{data.datetime} - {formatDate(data.datetime)} - {Math.round(data.tempmax)}</p>
+                        <p></p>
+                    </span>
                 ))
             )}
         </div>

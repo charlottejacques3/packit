@@ -1,0 +1,17 @@
+.weather-card {
+    background-color: lightgrey;
+    padding: 15px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+img {
+    height: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p {
+    text-align: center;
+}

@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
 import { useState } from 'react';
 
-import './App.css';
+import './styles/App.css';
 import Form from './Form'
 import Fetch from './Fetch'
+import WeatherCard from './WeatherCard';
+
+import './styles/WeatherCard.css'
+
+//images
+import sunny_icon from './images/sunny_icon.png'
 
 class App extends Component {
   
@@ -27,7 +33,9 @@ class App extends Component {
     let url_suffix = "?unitGroup=metric&include=days&key=LR9FZM68C2LQX5B8SUT84J6QK&contentType=json";
 
     this.setState({
-      apiUrl: url_prefix.concat(formData.get("location"), url_suffix),
+      apiUrl: url_prefix.concat(formData.get("location"), "/", 
+                                formData.get("startDate"), "/",
+                                formData.get("endDate"), url_suffix),
       formSubmitted: true,
     });
   }
@@ -37,7 +45,7 @@ class App extends Component {
     let content;
     if (this.state.formSubmitted) {
       content = <Fetch url={this.state.apiUrl}/>;
-    }  else {
+    } else {
       content = (
         <form onSubmit={this.handleSubmit}>
             <label>Trip Name: </label>
@@ -62,6 +70,16 @@ class App extends Component {
     return (
       <div className="App">
           <h1>PackIt</h1>
+          <div class="container">
+            <div className="row">
+              <div className="col-md-2">
+                <WeatherCard/>
+              </div>
+              <div className="col-md-2">
+                <WeatherCard/>
+              </div>
+            </div>
+          </div>
           { content }
       </div>
     );
